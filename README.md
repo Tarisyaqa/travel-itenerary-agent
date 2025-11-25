@@ -2,11 +2,11 @@
 Minimize research and planning time by creating itineraries from scattered informations, streamlining routes and travel time.
 
 ### **Project Overview**
-**Problem:**Travelers struggle to create itineraries because information is scattered, routes are inefficient, travel times are inaccurate, and research is time-consuming.
+**Problem:** Travelers struggle to create itineraries because information is scattered, routes are inefficient, travel times are inaccurate, and research is time-consuming.
 
 **Solution:** A Travel AI Agent that combines Gemini's reasoning capabilities with real-time geographic data from the Google Maps API to generate personalized, efficient, and ready-to-use itineraries in seconds.
 
-###**Problem Statement**
+### **Problem Statement**
 Travel often feels overwhelming before it even begins because the planning process is time-consuming, confusing, and unstructured. Users must research tourist destinations one by one, compare distances, plan routes, consider duration, and ensure their itinerary is realistic and efficient. Many travelers — especially younger travelers on short trips (2–4 days) — complain that:
 
 1. Destination information is scattered across multiple platforms
@@ -38,12 +38,12 @@ Many AI-generated itineraries are still inaccurate because they don't consider:
 - geographical location
 - fastest route
 
-###**Solution Statement**
+### **Solution Statement**
 
-###**Architenture**
+### **Architenture**
 
-###**Essential Tools and Utilities**
+### **Essential Tools and Utilities**
 
-###**Conclusion**
+### **Conclusion**
 
-###**Value Statement**
+### **Value Statement**
