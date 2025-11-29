@@ -1,0 +1,30 @@
+             ┌───────────────────────────┐
+             │   Root Travel Agent       │
+             │ (Orchestrator / Planner)  │
+             └─────────────┬─────────────┘
+                           │
+       ┌───────────────────┼────────────────────┐
+       │                   │                    │
+       ▼                   ▼                    ▼
+┌────────────────┐   ┌──────────────┐     ┌────────────────┐
+│  Maps Agent    │   │ Booking Agent│     │  Format Agent  │
+│ (OpenStreetMap)│   │ (Hotel/Trans)│     │ (Narrative)    │
+└──────┬─────────┘   └──────┬───────┘     └──────┬─────────┘
+       │                    │                    │
+       ▼                    ▼                    ▼
+ (maps_tools)    (booking_tools)        (format_tools)
+       │                 │                    │
+       └─────────────────┼────────────────────┘
+                         ▼
+                 ┌──────────────┐
+                 │  Excel Agent │
+                 │ (.xlsx file) │
+                 └───────┬──────┘
+                         ▼
+                   output.xlsx
+
+root_agent
+├─ memanggil maps_agent
+├─ memanggil booking_agent
+├─ memanggil format_agent
+└─ memanggil excel_agent

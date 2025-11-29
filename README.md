@@ -42,6 +42,21 @@ Many AI-generated itineraries are still inaccurate because they don't consider:
 
 ### **Architenture**
 
+# Travel AI Agent (ADK) - Template
+
+## Prerequisites
+- Python 3.10+
+- Google API Key with Maps APIs enabled (Places, Distance Matrix)
+- ADK installed (`pip install google-adk`)
+
+## Setup
+1. Clone repo
+2. Copy `.env.example` → `.env`, lalu isi `GOOGLE_API_KEY`
+3. Install deps:
+   ```bash
+   pip install -r requirements.txt
+
+
 ### **Essential Tools and Utilities**
 
 ### **Conclusion**

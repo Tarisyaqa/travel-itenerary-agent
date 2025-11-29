@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel AI Agent Architecture</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'base',
+            themeVariables: {
+                primaryColor: '#374151',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#6b7280',
+                lineColor: '#9ca3af',
+                secondaryColor: '#1f2937',
+                tertiaryColor: '#111827'
+            }
+        });
+    </script>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .mermaid-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            background-color: #2d2d2d;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 20px;
+            overflow: auto;
+        }
+        .legend {
+            margin-top: 20px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body class="p-8">
+
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-3xl font-bold mb-2 text-center text-green-400">Arsitektur Travel AI Agent</h1>
+        <p class="text-center text-gray-400 mb-8">Visualisasi Root Agent, Sub-Agents, dan Tools berdasarkan dokumen spesifikasi.</p>
+
+        <div class="mermaid-container">
+            <div class="mermaid">
+            %%{init: {'flowchart': {'curve': 'basis'}}}%%
+            graph LR
+                %% -- STYLES --
+                classDef root fill:#1b4d3e,stroke:#4caf50,stroke-width:2px,color:#fff,rx:20,ry:20;
+                classDef agent fill:#3f3f46,stroke:#71717a,stroke-width:2px,color:#fff,rx:15,ry:15;
+                classDef tool fill:#27272a,stroke:#a1a1aa,stroke-width:1px,stroke-dasharray: 5 5,color:#d4d4d8,rx:5,ry:5;
+                classDef user fill:#000,stroke:#fff,stroke-width:2px,color:#fff,circle;
+
+                %% -- NODES --
+                
+                %% User Node
+                User((User / UI)):::user
+
+                %% Root Agent
+                Root[🤖 travel_itinerary_agent<br/>Root Orchestrator]:::root
+
+                %% Sub Agents
+                MapsAgent[🤖 maps_agent]:::agent
+                BookingAgent[🤖 booking_agent]:::agent
+                FormatAgent[🤖 format_agent]:::agent
+                ExcelAgent[🤖 excel_agent]:::agent
+
+                %% Tools for Maps Agent
+                subgraph MapTools [Maps Tools]
+                    direction TB
+                    T_MapsPlace[🔧 Google Maps Places API]:::tool
+                    T_MapsDir[🔧 Google Directions API]:::tool
+                    T_MapsGeo[🔧 Google Geocoding API]:::tool
+                end
+
+                %% Tools for Booking Agent
+                subgraph BookingTools [Booking Tools]
+                    direction TB
+                    T_WebSearch[🔧 Web Search Tool]:::tool
+                    T_BookingAPI[🔧 Traveloka/Booking API]:::tool
+                end
+
+                %% Tools for Excel Agent
+                subgraph ExcelTools [Excel Tools]
+                    direction TB
+                    T_Excel[🔧 ExcelWriterTool<br/>openpyxl]:::tool
+                end
+
+                %% -- CONNECTIONS --
+
+                %% User Flow
+                User -->|Request: Tujuan, Budget, Prefs| Root
+                Root -->|File .xlsx Final| User
+
+                %% Root to Agents
+                Root -->|1. Cari Lokasi & Rute| MapsAgent
+                Root -->|2. Cari Harga & Link| BookingAgent
+                Root -->|3. Validasi & Format Data| FormatAgent
+                Root -->|4. Generate File| ExcelAgent
+
+                %% Agents to Tools
+                MapsAgent --- T_MapsPlace
+                MapsAgent --- T_MapsDir
+                MapsAgent --- T_MapsGeo
+
+                BookingAgent --- T_WebSearch
+                BookingAgent --- T_BookingAPI
+
+                ExcelAgent --- T_Excel
+
+                %% Returns (Feedback Loop)
+                MapsAgent -.->|Data Lokasi & Rute| Root
+                BookingAgent -.->|Link Booking & Harga| Root
+                FormatAgent -.->|JSON Terstruktur| Root
+                ExcelAgent -.->|Path File .xlsx| Root
+
+                %% Interaction Styling
+                linkStyle default stroke:#6b7280,stroke-width:2px;
+            </div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="dot" style="background-color: #1b4d3e; border: 2px solid #4caf50;"></div>
+                <span>Root Agent</span>
+            </div>
+            <div class="legend-item">
+                <div class="dot" style="background-color: #3f3f46; border: 2px solid #71717a;"></div>
+                <span>Sub-Agent</span>
+            </div>
+            <div class="legend-item">
+                <div class="dot" style="background-color: #27272a; border: 1px dashed #a1a1aa;"></div>
+                <span>Tool / API</span>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
